@@ -4,22 +4,23 @@ import re
 def check_validity(dic):
     passed = 0
     print(f'Checking: {dic}')
-    for field in keys_for_valid:
-        try:
-            check_byr(dic['byr'])
-            check_iyr(dic['iyr'])
-            check_eyr(dic['eyr'])
-            check_hgt(dic['hgt'])
-            check_hcl(dic['hcl'])
-            check_pid(dic['pid'])
 
-            print(f'Pass {field}: {dic[field]}')
-            passed += 1
+    try:
+        passed = passed + check_byr(dic['byr'])
+        passed = passed + check_iyr(dic['iyr'])
+        passed = passed + check_eyr(dic['eyr'])
+        passed = passed + check_hgt(dic['hgt'])
+        passed = passed + check_hcl(dic['hcl'])
+        passed = passed + check_ecl(dic['ecl'])
+        passed = passed + check_pid(dic['pid'])
+
+        print(f'Pass: {dic}')
+    except:
+        try:
+            print(f'Fail:{dic}')
         except:
-            try:
-                print(f'Fail {field}: {dic[field]}')
-            except:
-                print(f'Fail: {field} not found')
+            print(f'Fail: {dic} field not found')
+    print(f'{passed} of {len(keys_for_valid)} passed')
     if passed == len(keys_for_valid):
         print('Accepted')
         return 1
@@ -29,58 +30,76 @@ def check_validity(dic):
 
 
 def check_byr(year):
-    if 1920 <= int(year) <= 2020:
-        return
+    if 1920 <= int(year) <= 2002:
+        print('Pass: byr')
+        return 1
     else:
+        print('Fail: byr')
         return AssertionError('Invalid byr')
 
 
 def check_iyr(iss_year):
     if 2010 <= int(iss_year) <= 2020:
-        return
+        print('Pass: iyr')
+        return 1
     else:
+        print('Fail: byr')
         return AssertionError('Invalid iyr')
 
 
 def check_eyr(ex_year):
-    if 2010 >= int(ex_year) >= 2020 and re.match('[0-9]{4}', ex_year):
-        return
+    if 2020 <= int(ex_year) <= 2030:
+        print('Pass: eyr')
+        return 1
     else:
+        print('Fail: eyr')
         return AssertionError('Invalid eyr')
 
 
 def check_hgt(ht):
     if re.match('^[0-9]{1,3}cm$', ht):
-        if 150 >= int(ht.strip('cm')) >= 193:
-            return
+        if 150 <= int(ht.strip('cm')) <= 193:
+            print('Pass: htcm')
+            return 1
         else:
+            print(f'Fail: htcm:{int(ht.strip("cm"))}')
             return AssertionError('Bad ht cm')
     elif re.match('^[0-9]{1,3}in$', ht):
-        if 150 >= int(ht.strip('in')) >= 193:
-            return
+        if 59 <= int(ht.strip('in')) <= 76:
+            print('Pass: htin')
+            return 1
         else:
+            print('Fail: htin')
             return AssertionError('Bad ht in')
+    else:
+        return AssertionError('No unit')
 
 
 def check_hcl(color):
     if re.match('^#[abcdef0123456789]{6}$', color):
-        return
+        print('Pass: hcl')
+        return 1
     else:
+        print('Fail: hcl')
         return AssertionError('Invalid hcl')
 
 
 def check_ecl(ecolor):
     eye_colors = ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth', ]
     if ecolor in eye_colors:
-        return
+        print('Pass: ecl')
+        return 1
     else:
+        print('Fail: ecl')
         return AssertionError('Invalid ecl')
 
 
 def check_pid(pass_id):
     if re.match('^[0-9]{9}$', pass_id):
-        return
+        print('Pass: pid')
+        return 1
     else:
+        print('Fail: pid')
         return AssertionError('Invalid pid')
 
 
