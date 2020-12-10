@@ -8,6 +8,7 @@ def get_file(input_file=r'd9input.txt'):
     return adapters
 
 
+
 # def check_num(current_idx):
 #     current_num_set = cypher[current_idx-preamble:current_idx]
 #     if not sum_valid(current_num_set, cypher[current_idx]):
