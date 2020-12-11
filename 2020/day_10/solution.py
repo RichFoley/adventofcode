@@ -1,5 +1,7 @@
+from collections import Counter
 
-def get_file(input_file=r'd9input.txt'):
+
+def get_file(input_file=r'd10input.txt'):
     with open(input_file) as file:
         adapters = []
         for line in file:
@@ -8,37 +10,12 @@ def get_file(input_file=r'd9input.txt'):
     return adapters
 
 
-# def check_num(current_idx):
-#     current_num_set = cypher[current_idx-preamble:current_idx]
-#     if not sum_valid(current_num_set, cypher[current_idx]):
-#         invalid = cypher[current_idx]
-#     else:
-#         return check_num(current_idx+1)
-#     return invalid
-#
-#
-# def sum_valid(num_set, target):
-#     for num1 in num_set:
-#         for num2 in num_set:
-#             if num1 + num2 == target:
-#                 return True
-#     return False
-#
-#
-# def test_sets(target):
-#     for idx, num1 in enumerate(cypher):
-#         for idy, num2 in enumerate(cypher):
-#             if sum(cypher[idx:idy]) == target and len(cypher[idx:idy]) != 1:
-#                 print(idx, idy)
-#                 print(cypher[idx:idy])
-#                 key = min(cypher[idx:idy])+max(cypher[idx:idy])
-#                 print(f'Part2: enc key= {key}')
-#
-#
-# preamble = 25
-# cypher = get_file()
-# invalid_num = check_num(current_idx=preamble)
-# print(f'Part 1: 1st invalid number = {invalid_num}')
-#
-# test_sets(invalid_num)
+adapters = get_file()
+adapters = sorted(adapters)
+device = max(adapters) + 3
+adapters.append(device)
 
+differences = [x - y for x, y in zip(adapters, [0] + adapters)]
+count_diffs = Counter(differences)
+print(f'Count of differences: {count_diffs}')
+print(f'Pt1, count of 1 diffs * 3 diffs {count_diffs[1] * count_diffs[3]}')
