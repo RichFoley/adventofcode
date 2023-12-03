@@ -13,6 +13,7 @@ print(bin_output)
 
 def extract_bits(bits_list, pos):
     for bit_str in bits_list:
+        pass
 
 
 
